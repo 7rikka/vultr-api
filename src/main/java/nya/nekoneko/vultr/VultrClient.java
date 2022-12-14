@@ -1,46 +1,73 @@
 package nya.nekoneko.vultr;
 
 import nya.nekoneko.vultr.model.Instance;
+import nya.nekoneko.vultr.model.page.PageMeta;
 import nya.nekoneko.vultr.param.InstanceQueryParam;
 import nya.nekoneko.vultr.param.PaginationParam;
 import okhttp3.Request;
+import org.noear.snack.ONode;
+import org.noear.snack.core.Options;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Ho
  */
 public class VultrClient {
     private final String API_KEY;
+    private final Options options = Options.def();
 
     public VultrClient(String apiKey) {
         API_KEY = apiKey;
+        options.addDecoder(LocalDateTime.class, (node, type) -> TimeUtils.toBeijingTime(node.getRawString()));
     }
 
     /**
      * 获取实例列表
      */
-    public void getInstanceList(InstanceQueryParam instanceQueryParam, PaginationParam paginationParam) {
-
+    public VultrResult<Instance> getInstanceList(InstanceQueryParam instanceQueryParam, PaginationParam paginationParam) {
+        //https://api.vultr.com/v2/instances
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/instances")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        if (null != instanceQueryParam) {
+            vultrRequest.addParam("label", instanceQueryParam.getLabel());
+            vultrRequest.addParam("main_ip", instanceQueryParam.getMainIp());
+            vultrRequest.addParam("region", instanceQueryParam.getRegion());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<Instance> instances = node.get("instances").toObjectList(Instance.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(instances, meta);
     }
 
     /**
      * 获取实例列表
      */
-    public void getInstanceList(InstanceQueryParam instanceQueryParam) {
-        getInstanceList(instanceQueryParam, null);
+    public VultrResult<Instance> getInstanceList(InstanceQueryParam instanceQueryParam) {
+        return getInstanceList(instanceQueryParam, null);
     }
 
     /**
      * 获取实例列表
      */
-    public void getInstanceList(PaginationParam paginationParam) {
-        getInstanceList(null, paginationParam);
+    public VultrResult<Instance> getInstanceList(PaginationParam paginationParam) {
+        return getInstanceList(null, paginationParam);
     }
 
     /**
      * 获取实例列表
      */
-    public void getInstanceList() {
-        getInstanceList(null, null);
+    public VultrResult<Instance> getInstanceList() {
+        return getInstanceList(null, null);
     }
 
     /**
@@ -49,15 +76,12 @@ public class VultrClient {
      * @param instanceId 实例ID
      */
     public Instance getInstance(String instanceId) {
-        //https://api.vultr.com/v2/instances/b7d62c72-e5ec-42ba-a625-77ae2a1b6595
         Request request = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/instances/" + instanceId)
                 .header("Authorization", "Bearer " + API_KEY)
                 .buildRequest();
-        String s = VultrCall.doCallGetString(request);
-        //{"instance":{"id":"b7d62c72-e5ec-42ba-a625-77ae2a1b6595","os":"Ubuntu 19.10 x64","ram":1024,"disk":25,"main_ip":"149.28.222.196","vcpu_count":1,"region":"sjc","plan":"vc2-1c-1gb","date_created":"2022-12-12T08:26:18+00:00","status":"active","allowed_bandwidth":1000,"netmask_v4":"255.255.254.0","gateway_v4":"149.28.222.1","power_status":"running","server_status":"ok","v6_network":"","v6_main_ip":"","v6_network_size":0,"label":"","internal_ip":"","kvm":"https:\/\/my.vultr.com\/subs\/vps\/novnc\/api.php?data=djJ8UmczekZnaUU2Y21HTEhMVDVtMFYwaGlWbzdLVG9TSTN8rhqSIz45ncksvfLhkFUkZlDoF0ILQkG4fpx7vVrkSHien3i5Kb5vMppAxeY_qpKKKEpmQDDSfuy6yW8mqXwLmyps5bBtPsU6q4P__2Y7xVL1pfvK_QGizjdiU9yiTrEx20Iq2VDecSqv971jqQaeQbhfZGvW-LUvuf_TZMfn5UU-rU0YAPL22RSApxhfIeo","hostname":"vultr.guest","tag":"","tags":[],"os_id":365,"app_id":0,"image_id":"","firewall_group_id":"","features":[]}}
-        System.out.println(s);
-        return null;
+        String json = VultrCall.doCallGetString(request);
+        return ONode.loadStr(json, options).get("instance").toObject(Instance.class);
     }
 }
