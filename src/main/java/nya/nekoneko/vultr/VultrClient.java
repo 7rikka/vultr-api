@@ -1,5 +1,6 @@
 package nya.nekoneko.vultr;
 
+import nya.nekoneko.vultr.model.Account;
 import nya.nekoneko.vultr.model.BillingHistory;
 import nya.nekoneko.vultr.model.BillingInvoice;
 import nya.nekoneko.vultr.model.Instance;
@@ -136,7 +137,6 @@ public class VultrClient {
         }
         Request request = vultrRequest.buildRequest();
         String result = VultrCall.doCallGetString(request);
-        System.out.println(result);
         ONode node = ONode.loadStr(result, options);
         List<BillingInvoice> billingInvoiceList = node.get("billing_invoices").toObjectList(BillingInvoice.class);
         PageMeta meta = node.get("meta").toObject(PageMeta.class);
@@ -150,5 +150,21 @@ public class VultrClient {
      */
     public VultrResult<BillingInvoice> getInvoiceList() {
         return getInvoiceList(null);
+    }
+
+    /**
+     * 获取账户信息
+     *
+     * @return
+     */
+    public Account getAccountInfo() {
+        Request request = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/account")
+                .header("Authorization", "Bearer " + API_KEY)
+                .buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        return node.get("account").toObject(Account.class);
     }
 }
