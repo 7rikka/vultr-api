@@ -345,7 +345,6 @@ public class VultrClient {
         }
         Request request = vultrRequest.buildRequest();
         String result = VultrCall.doCallGetString(request);
-        System.out.println(result);
         ONode node = ONode.loadStr(result, options);
         List<Os> osList = node.get("os").toObjectList(Os.class);
         PageMeta meta = node.get("meta").toObject(PageMeta.class);
@@ -359,5 +358,37 @@ public class VultrClient {
      */
     public VultrResult<Os> getOSList() {
         return getOSList(null);
+    }
+
+    /**
+     * 获取地区列表
+     *
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<Region> getRegionList(PaginationParam paginationParam) {
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/regions")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<Region> regionList = node.get("regions").toObjectList(Region.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(regionList, meta);
+    }
+
+    /**
+     * 获取地区列表
+     *
+     * @return
+     */
+    public VultrResult<Region> getRegionList() {
+        return getRegionList(null);
     }
 }

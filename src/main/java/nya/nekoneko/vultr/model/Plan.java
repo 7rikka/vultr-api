@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.noear.snack.annotation.ONodeAttr;
 
 import java.util.List;
+
 /**
  * @author Ho
  */
