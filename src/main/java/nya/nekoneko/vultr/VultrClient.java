@@ -1,6 +1,7 @@
 package nya.nekoneko.vultr;
 
 import nya.nekoneko.vultr.consts.ApplicationType;
+import nya.nekoneko.vultr.consts.PlanType;
 import nya.nekoneko.vultr.model.*;
 import nya.nekoneko.vultr.model.page.PageMeta;
 import nya.nekoneko.vultr.param.InstanceQueryParam;
@@ -270,4 +271,61 @@ public class VultrClient {
     public VultrResult<Application> getApplicationList() {
         return getApplicationList(null, null);
     }
+
+    /**
+     * 获取套餐列表
+     *
+     * @param planType        套餐类型
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<Plan> getPlanList(PlanType planType, PaginationParam paginationParam) {
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/plans")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != planType) {
+            vultrRequest.addParam("type", planType.value());
+        }
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<Plan> applicationList = node.get("plans").toObjectList(Plan.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(applicationList, meta);
+    }
+
+    /**
+     * 获取套餐列表
+     *
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<Plan> getPlanList(PaginationParam paginationParam) {
+        return getPlanList(null, paginationParam);
+    }
+
+    /**
+     * 获取套餐列表
+     *
+     * @param planType 套餐类型
+     * @return
+     */
+    public VultrResult<Plan> getPlanList(PlanType planType) {
+        return getPlanList(planType, null);
+    }
+
+    /**
+     * 获取套餐列表
+     *
+     * @return
+     */
+    public VultrResult<Plan> getPlanList() {
+        return getPlanList(null, null);
+    }
+
 }
