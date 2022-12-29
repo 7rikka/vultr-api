@@ -328,4 +328,36 @@ public class VultrClient {
         return getPlanList(null, null);
     }
 
+    /**
+     * 获取操作系统列表
+     *
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<Os> getOSList(PaginationParam paginationParam) {
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/os")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        System.out.println(result);
+        ONode node = ONode.loadStr(result, options);
+        List<Os> osList = node.get("os").toObjectList(Os.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(osList, meta);
+    }
+
+    /**
+     * 获取操作系统列表
+     *
+     * @return
+     */
+    public VultrResult<Os> getOSList() {
+        return getOSList(null);
+    }
 }

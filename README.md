@@ -15,6 +15,8 @@
 - [ ] 实例(Instances)
     - [X] 获取实例列表(v2/instances)
     - [X] 获取指定实例信息(v2/instances/{instanceId})
+- [X] 操作系统(Operating Systems)
+  - [X] 获取操作系统列表(v2/os)
 - [ ] 套餐(Plans)
   - [X] 获取套餐列表(v2/plans)
 
