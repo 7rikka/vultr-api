@@ -1,6 +1,7 @@
 package nya.nekoneko.vultr;
 
 import nya.nekoneko.vultr.model.BillingHistory;
+import nya.nekoneko.vultr.model.BillingInvoice;
 import nya.nekoneko.vultr.model.Instance;
 import nya.nekoneko.vultr.model.page.PageMeta;
 import nya.nekoneko.vultr.param.InstanceQueryParam;
@@ -116,5 +117,38 @@ public class VultrClient {
      */
     public VultrResult<BillingHistory> getBillingHistoryList() {
         return getBillingHistoryList(null);
+    }
+
+    /**
+     * 获取发票列表
+     *
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<BillingInvoice> getInvoiceList(PaginationParam paginationParam) {
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/billing/invoices")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        System.out.println(result);
+        ONode node = ONode.loadStr(result, options);
+        List<BillingInvoice> billingInvoiceList = node.get("billing_invoices").toObjectList(BillingInvoice.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(billingInvoiceList, meta);
+    }
+
+    /**
+     * 获取发票列表
+     *
+     * @return
+     */
+    public VultrResult<BillingInvoice> getInvoiceList() {
+        return getInvoiceList(null);
     }
 }
