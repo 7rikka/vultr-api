@@ -167,4 +167,19 @@ public class VultrClient {
         ONode node = ONode.loadStr(result, options);
         return node.get("account").toObject(Account.class);
     }
+
+    /**
+     * 获取发票信息
+     * @param invoiceId
+     * @return
+     */
+    public BillingInvoice getInvoice(int invoiceId) {
+        Request request = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/billing/invoices/" + invoiceId)
+                .header("Authorization", "Bearer " + API_KEY)
+                .buildRequest();
+        String json = VultrCall.doCallGetString(request);
+        return ONode.loadStr(json, options).get("billing_invoice").toObject(BillingInvoice.class);
+    }
 }
