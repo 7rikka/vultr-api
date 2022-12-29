@@ -1,9 +1,6 @@
 package nya.nekoneko.vultr;
 
-import nya.nekoneko.vultr.model.Account;
-import nya.nekoneko.vultr.model.BillingHistory;
-import nya.nekoneko.vultr.model.BillingInvoice;
-import nya.nekoneko.vultr.model.Instance;
+import nya.nekoneko.vultr.model.*;
 import nya.nekoneko.vultr.model.page.PageMeta;
 import nya.nekoneko.vultr.param.InstanceQueryParam;
 import nya.nekoneko.vultr.param.PaginationParam;
@@ -170,7 +167,8 @@ public class VultrClient {
 
     /**
      * 获取发票信息
-     * @param invoiceId
+     *
+     * @param invoiceId 发票id
      * @return
      */
     public BillingInvoice getInvoice(int invoiceId) {
@@ -182,4 +180,39 @@ public class VultrClient {
         String json = VultrCall.doCallGetString(request);
         return ONode.loadStr(json, options).get("billing_invoice").toObject(BillingInvoice.class);
     }
+
+    /**
+     * 获取发票子项
+     *
+     * @param invoiceId 发票id
+     * @return
+     */
+    public VultrResult<BillingInvoiceItem> getInvoiceItem(int invoiceId) {
+        return getInvoiceItem(invoiceId, null);
+    }
+
+    /**
+     * 获取发票子项
+     *
+     * @param invoiceId       发票id
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<BillingInvoiceItem> getInvoiceItem(int invoiceId, PaginationParam paginationParam) {
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/billing/invoices/" + invoiceId + "/items")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<BillingInvoiceItem> billingInvoiceItemList = node.get("invoice_items").toObjectList(BillingInvoiceItem.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(billingInvoiceItemList, meta);
+    }
+
 }
