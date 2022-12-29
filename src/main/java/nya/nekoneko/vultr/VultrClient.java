@@ -1,5 +1,6 @@
 package nya.nekoneko.vultr;
 
+import nya.nekoneko.vultr.consts.ApplicationType;
 import nya.nekoneko.vultr.model.*;
 import nya.nekoneko.vultr.model.page.PageMeta;
 import nya.nekoneko.vultr.param.InstanceQueryParam;
@@ -215,4 +216,58 @@ public class VultrClient {
         return new VultrResult<>(billingInvoiceItemList, meta);
     }
 
+    /**
+     * 获取应用程序列表
+     *
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<Application> getApplicationList(ApplicationType applicationType, PaginationParam paginationParam) {
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/applications")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != applicationType) {
+            vultrRequest.addParam("type", applicationType.value());
+        }
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<Application> applicationList = node.get("applications").toObjectList(Application.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(applicationList, meta);
+    }
+
+    /**
+     * 获取应用程序列表
+     *
+     * @param applicationType 应用程序类型
+     * @return
+     */
+    public VultrResult<Application> getApplicationList(ApplicationType applicationType) {
+        return getApplicationList(applicationType, null);
+    }
+
+    /**
+     * 获取应用程序列表
+     *
+     * @param paginationParam 分页信息
+     * @return
+     */
+    public VultrResult<Application> getApplicationList(PaginationParam paginationParam) {
+        return getApplicationList(null, paginationParam);
+    }
+
+    /**
+     * 获取应用程序列表
+     *
+     * @return
+     */
+    public VultrResult<Application> getApplicationList() {
+        return getApplicationList(null, null);
+    }
 }

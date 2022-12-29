@@ -5,6 +5,8 @@
 # 接口列表
 - [X] 账户(Account)
   - [X] 获取账户信息(v2/account)
+- [X] 应用程序(Applications)
+  - [X] 获取应用程序列表(v2/applications)
 - [X] 账单(Billing)
   - [X] 获取账单历史列表(v2/billing/history)
   - [X] 获取发票列表(v2/billing/invoices)
