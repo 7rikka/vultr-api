@@ -3,24 +3,198 @@
 个人用Vultr操作工具包
 
 # 接口列表
+
 - [X] 账户(Account)
-  - [X] 获取账户信息(v2/account)
+    - [X] 获取账户信息(v2/account)
 - [X] 应用程序(Applications)
-  - [X] 获取应用程序列表(v2/applications)
+    - [X] 获取应用程序列表(v2/applications)
+- [ ] Backups
+    - [ ] List Backups
+    - [ ] Get a Backup
+- [ ] Bare Metal
+    - [ ] List Bare Metal Instances
+    - [ ] Create Bare Metal Instance
+    - [ ] Get Bare Metal
+    - [ ] Update Bare Metal
+    - [ ] Delete Bare Metal
+    - [ ] Bare Metal IPv4 Addresses
+    - [ ] Bare Metal IPv6 Addresses
+    - [ ] Start Bare Metal
+    - [ ] Reboot Bare Metal
+    - [ ] Reinstall Bare Metal
+    - [ ] Halt Bare Metal
+    - [ ] Bare Metal Bandwidth
+    - [ ] Halt Bare Metals
+    - [ ] Reboot Bare Metals
+    - [ ] Start Bare Metals
+    - [ ] Get Bare Metal User Data
+    - [ ] Get Available Bare Metal Upgrades
+    - [ ] Get VNC URL for a Bare Metal
 - [X] 账单(Billing)
-  - [X] 获取账单历史列表(v2/billing/history)
-  - [X] 获取发票列表(v2/billing/invoices)
-  - [X] 获取发票信息(v2/billing/invoices/{invoiceId})
-  - [X] 获取发票子项(v2/billing/invoices/{invoiceId}/items)
+    - [X] 获取账单历史列表(v2/billing/history)
+    - [X] 获取发票列表(v2/billing/invoices)
+    - [X] 获取发票信息(v2/billing/invoices/{invoiceId})
+    - [X] 获取发票子项(v2/billing/invoices/{invoiceId}/items)
+- [ ] Block Storage
+    - [ ] List Block storages
+    - [ ] Create Block Storage
+    - [ ] Get Block Storage
+    - [ ] Delete Block Storage
+    - [ ] Update Block Storage
+    - [ ] Attach Block Storage
+    - [ ] Detach Block Storage
+- [ ] DNS
+    - [ ] List DNS Domains
+    - [ ] Create DNS Domain
+    - [ ] Get DNS Domain
+    - [ ] Delete Domain
+    - [ ] Update a DNS Domain
+    - [ ] Get SOA information
+    - [ ] Update SOA information
+    - [ ] Get DNSSec Info
+    - [ ] Create Record
+    - [ ] List Records
+    - [ ] Get Record
+    - [ ] Update Record
+    - [ ] Delete Record
+- [ ] Firewall
+    - [ ] List Firewall Groups
+    - [ ] Create Firewall Group
+    - [ ] Get Firewall Group
+    - [ ] Update Firewall Group
+    - [ ] Delete Firewall Group
+    - [ ] List Firewall Rules
+    - [ ] Create Firewall Rules
+    - [ ] Delete Firewall Rule
+    - [ ] Get Firewall Rule
 - [ ] 实例(Instances)
     - [X] 获取实例列表(v2/instances)
+    - [ ] Create Instance
     - [X] 获取指定实例信息(v2/instances/{instanceId})
+    - [ ] Update Instance
+    - [ ] Delete Instance
+    - [ ] Halt Instances
+    - [ ] Reboot instances
+    - [ ] Start instances
+    - [ ] Start instance
+    - [ ] Reboot Instance
+    - [ ] Reinstall Instance
+    - [ ] Instance Bandwidth
+    - [ ] Get Instance neighbors
+    - [ ] List instance VPCs
+    - [ ] Get Instance ISO Status
+    - [ ] Attach ISO to Instance
+    - [ ] Detach ISO from instance
+    - [ ] Attach VPC to Instance
+    - [ ] Detach VPC from Instance
+    - [ ] Set Instance Backup Schedule
+    - [ ] Get Instance Backup Schedule
+    - [ ] Restore Instance
+    - [ ] List Instance IPv4 Information
+    - [ ] Create IPv4
+    - [ ] Get Instance IPv6 Information
+    - [ ] Create Instance Reverse IPv6
+    - [ ] List Instance IPv6 Reverse
+    - [ ] Create Instance Reverse IPv4
+    - [ ] Get Instance User Data
+    - [ ] Halt Instance
+    - [ ] Set Default Reverse DNS Entry
+    - [ ] Delete IPv4 Address
+    - [ ] Delete Instance Reverse IPv6
+    - [ ] Get Available Instance Upgrades
+- [ ] ISO
+    - [ ] List ISOs
+    - [ ] Create ISO
+    - [ ] Get ISO
+    - [ ] Delete ISO
+    - [ ] List Public ISOs
+- [ ] Kubernetes
+    - [ ] Create Kubernetes Cluster
+    - [ ] List all Kubernetes Clusters
+    - [ ] Get Kubernetes Cluster
+    - [ ] Update Kubernetes Cluster
+    - [ ] Delete Kubernetes Cluster
+    - [ ] Delete VKE Cluster and All Related Resources
+    - [ ] Get Kubernetes Resources
+    - [ ] Get Kubernetes Available Upgrades
+    - [ ] Start Kubernetes Cluster Upgrade
+    - [ ] Create NodePool
+    - [ ] List NodePools
+    - [ ] Get NodePool
+    - [ ] Update Nodepool
+    - [ ] Delete Nodepool
+    - [ ] Delete NodePool Instance
+    - [ ] Recycle a NodePool Instance
+    - [ ] Get Kubernetes Cluster Kubeconfig
+    - [ ] Get Kubernetes Versions
+- [ ] Load Balancers
+    - [ ] List Load Balancers
+    - [ ] Create Load Balancer
+    - [ ] Get Load Balancer
+    - [ ] Update Load Balancer
+    - [ ] Delete Load Balancer
+    - [ ] List Forwarding Rules
+    - [ ] Create Forwarding Rule
+    - [ ] Get Forwarding Rule
+    - [ ] Delete Forwarding Rule
+    - [ ] List Firewall Rules
+    - [ ] Get Firewall Rule
+- [ ] Object Storage
+    - [ ] List Object Storages
+    - [ ] Create Object Storage
+    - [ ] Get Object Storage
+    - [ ] Delete Object Storage
+    - [ ] Update Object Storage
+    - [ ] Regenerate Object Storage Keys
+    - [ ] Get All Clusters
 - [X] 操作系统(Operating Systems)
-  - [X] 获取操作系统列表(v2/os)
+    - [X] 获取操作系统列表(v2/os)
 - [ ] 套餐(Plans)
-  - [X] 获取套餐列表(v2/plans)
+    - [X] 获取套餐列表(v2/plans)
+    - [ ] List Bare Metal Plans
+- [ ] VPCs
+    - [ ] Get a VPC
+    - [ ] Delete a VPC
+    - [ ] Update a VPC
+    - [ ] List VPCs
+    - [ ] Create a VPC
+- [ ] Reserved IPs
+    - [ ] Get Reserved IP
+    - [ ] Delete Reserved IP
+    - [ ] Update Reserved IP
+    - [ ] List Reserved IPs
+    - [ ] Create Reserved IP
+    - [ ] Attach Reserved IP
+    - [ ] Detach Reserved IP
+    - [ ] Convert Instance IP to Reserved IP
 - [ ] 地区(Regions)
-  - [X] 获取地区列表(v2/regions)
+    - [X] 获取地区列表(v2/regions)
+    - [ ] List available plans in region
+- [ ] Snapshots
+    - [ ] Delete Snapshot
+    - [ ] Get Snapshot
+    - [ ] Update Snapshot
+    - [ ] List Snapshots
+    - [ ] Create Snapshot
+    - [ ] Create Snapshot from URL
+- [ ] SSH Keys
+    - [ ] Get SSH Key
+    - [ ] Update SSH Key
+    - [ ] Delete SSH Key
+    - [ ] List SSH Keys
+    - [ ] Create SSH key
+- [ ] Startup Scripts
+    - [ ] Get Startup Script
+    - [ ] Delete Startup Script
+    - [ ] Update Startup Script
+    - [ ] List Startup Scripts
+    - [ ] Create Startup Script
+- [ ] Users
+    - [ ] Get User
+    - [ ] Delete User
+    - [ ] Update User
+    - [ ] Get Users
+    - [ ] Create User
 
 # 调用示例
 
