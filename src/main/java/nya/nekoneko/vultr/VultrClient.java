@@ -442,4 +442,22 @@ public class VultrClient {
                 .buildRequest();
         VultrCall.doCallGetString(request);
     }
+
+    public VultrResult<VultrPublicISO> getPublicISOList() {
+        //https://api.vultr.com/v2/iso-public
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/iso-public")
+                .header("Authorization", "Bearer " + API_KEY);
+//        if (null != paginationParam) {
+//            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+//            vultrRequest.addParam("cursor", paginationParam.getCursor());
+//        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<VultrPublicISO> regionList = node.get("public_isos").toObjectList(VultrPublicISO.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(regionList, meta);
+    }
 }

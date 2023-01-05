@@ -102,12 +102,12 @@
     - [ ] Delete IPv4 Address
     - [ ] Delete Instance Reverse IPv6
     - [ ] Get Available Instance Upgrades
-- [ ] ISO
+- [X] ISO
     - [X] List ISOs
     - [X] Create ISO
     - [X] Get ISO
     - [X] Delete ISO
-    - [ ] List Public ISOs
+    - [X] List Public ISOs
 - [ ] Kubernetes
     - [ ] Create Kubernetes Cluster
     - [ ] List all Kubernetes Clusters
