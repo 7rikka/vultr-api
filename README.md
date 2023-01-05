@@ -104,7 +104,7 @@
     - [ ] Get Available Instance Upgrades
 - [ ] ISO
     - [X] List ISOs
-    - [ ] Create ISO
+    - [X] Create ISO
     - [X] Get ISO
     - [ ] Delete ISO
     - [ ] List Public ISOs

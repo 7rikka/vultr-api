@@ -17,6 +17,7 @@ public class VultrCall {
 //            .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890)))
             .build();
     private static final int SUCCESS = 200;
+    private static final int CREATED = 201;
 
     public static Response doCallGetResponse(Request request) {
         try {
@@ -31,7 +32,7 @@ public class VultrCall {
         try {
             Response response = CLIENT.newCall(request).execute();
             String result = response.body().string();
-            if (SUCCESS != response.code()) {
+            if (SUCCESS != response.code() && CREATED != response.code()) {
                 throw new VultrException(result);
             }
             return result;
