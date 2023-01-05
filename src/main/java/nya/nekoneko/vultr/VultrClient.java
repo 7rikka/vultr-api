@@ -412,4 +412,14 @@ public class VultrClient {
     public VultrResult<Iso> getISOList() {
         return getISOList(null);
     }
+
+    public Iso getISO(String isoId){
+        Request request = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/iso/" + isoId)
+                .header("Authorization", "Bearer " + API_KEY)
+                .buildRequest();
+        String json = VultrCall.doCallGetString(request);
+        return ONode.loadStr(json, options).get("iso").toObject(Iso.class);
+    }
 }

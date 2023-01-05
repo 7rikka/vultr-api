@@ -105,7 +105,7 @@
 - [ ] ISO
     - [X] List ISOs
     - [ ] Create ISO
-    - [ ] Get ISO
+    - [X] Get ISO
     - [ ] Delete ISO
     - [ ] List Public ISOs
 - [ ] Kubernetes
