@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BillingInvoice {
+public class VultrBillingInvoice {
     private Integer id;
     private LocalDateTime date;
     private String description;

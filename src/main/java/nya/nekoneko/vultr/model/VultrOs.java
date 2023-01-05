@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.noear.snack.annotation.ONodeAttr;
 
-import java.util.List;
-
 /**
  * @author Ho
  */
@@ -15,30 +13,25 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Region {
+public class VultrOs {
     /**
      *
      */
     @ONodeAttr(name = "id")
-    private String id;
+    private Integer id;
     /**
      *
      */
-    @ONodeAttr(name = "city")
-    private String city;
+    @ONodeAttr(name = "name")
+    private String name;
     /**
      *
      */
-    @ONodeAttr(name = "country")
-    private String country;
+    @ONodeAttr(name = "arch")
+    private String arch;
     /**
      *
      */
-    @ONodeAttr(name = "continent")
-    private String continent;
-    /**
-     *
-     */
-    @ONodeAttr(name = "options")
-    private List<String> options;
+    @ONodeAttr(name = "family")
+    private String family;
 }
