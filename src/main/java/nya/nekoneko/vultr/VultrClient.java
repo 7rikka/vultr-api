@@ -391,4 +391,25 @@ public class VultrClient {
     public VultrResult<Region> getRegionList() {
         return getRegionList(null);
     }
+
+    public VultrResult<Iso> getISOList(PaginationParam paginationParam) {
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/iso")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<Iso> regionList = node.get("isos").toObjectList(Iso.class);
+        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        return new VultrResult<>(regionList, meta);
+    }
+
+    public VultrResult<Iso> getISOList() {
+        return getISOList(null);
+    }
 }

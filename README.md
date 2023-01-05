@@ -4,10 +4,10 @@
 
 # 接口列表
 
-- [X] 账户(Account)
-    - [X] 获取账户信息(v2/account)
-- [X] 应用程序(Applications)
-    - [X] 获取应用程序列表(v2/applications)
+- [X] Account
+    - [X] Get Account Info
+- [X] Applications
+    - [X] List Applications
 - [ ] Backups
     - [ ] List Backups
     - [ ] Get a Backup
@@ -30,11 +30,11 @@
     - [ ] Get Bare Metal User Data
     - [ ] Get Available Bare Metal Upgrades
     - [ ] Get VNC URL for a Bare Metal
-- [X] 账单(Billing)
-    - [X] 获取账单历史列表(v2/billing/history)
-    - [X] 获取发票列表(v2/billing/invoices)
-    - [X] 获取发票信息(v2/billing/invoices/{invoiceId})
-    - [X] 获取发票子项(v2/billing/invoices/{invoiceId}/items)
+- [X] Billing
+    - [X] List Billing History
+    - [X] List Invoices
+    - [X] Get Invoice
+    - [X] Get Invoice Items
 - [ ] Block Storage
     - [ ] List Block storages
     - [ ] Create Block Storage
@@ -67,10 +67,10 @@
     - [ ] Create Firewall Rules
     - [ ] Delete Firewall Rule
     - [ ] Get Firewall Rule
-- [ ] 实例(Instances)
-    - [X] 获取实例列表(v2/instances)
+- [ ] Instances
+    - [X] List Instances
     - [ ] Create Instance
-    - [X] 获取指定实例信息(v2/instances/{instanceId})
+    - [X] Get Instance
     - [ ] Update Instance
     - [ ] Delete Instance
     - [ ] Halt Instances
@@ -103,7 +103,7 @@
     - [ ] Delete Instance Reverse IPv6
     - [ ] Get Available Instance Upgrades
 - [ ] ISO
-    - [ ] List ISOs
+    - [X] List ISOs
     - [ ] Create ISO
     - [ ] Get ISO
     - [ ] Delete ISO
@@ -147,10 +147,10 @@
     - [ ] Update Object Storage
     - [ ] Regenerate Object Storage Keys
     - [ ] Get All Clusters
-- [X] 操作系统(Operating Systems)
-    - [X] 获取操作系统列表(v2/os)
-- [ ] 套餐(Plans)
-    - [X] 获取套餐列表(v2/plans)
+- [X] Operating Systems
+    - [X] List OS
+- [ ] Plans
+    - [X] List Plans
     - [ ] List Bare Metal Plans
 - [ ] VPCs
     - [ ] Get a VPC
@@ -167,8 +167,8 @@
     - [ ] Attach Reserved IP
     - [ ] Detach Reserved IP
     - [ ] Convert Instance IP to Reserved IP
-- [ ] 地区(Regions)
-    - [X] 获取地区列表(v2/regions)
+- [ ] Regions
+    - [X] List Regions
     - [ ] List available plans in region
 - [ ] Snapshots
     - [ ] Delete Snapshot
