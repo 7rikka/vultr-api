@@ -106,7 +106,7 @@
     - [X] List ISOs
     - [X] Create ISO
     - [X] Get ISO
-    - [ ] Delete ISO
+    - [X] Delete ISO
     - [ ] List Public ISOs
 - [ ] Kubernetes
     - [ ] Create Kubernetes Cluster

@@ -102,6 +102,10 @@ public class VultrRequest {
         return this;
     }
 
+    public VultrRequest delete() {
+        builder.delete();
+        return this;
+    }
     public Request buildRequest() {
         url1(this.url, this.paramMap);
         addHeaders();
