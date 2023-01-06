@@ -3,7 +3,7 @@ package nya.nekoneko.vultr.consts;
 /**
  * @author Ho
  */
-public enum ApplicationType {
+public enum VultrApplicationType {
     /**
      *
      */
@@ -19,7 +19,7 @@ public enum ApplicationType {
 
     private final String value;
 
-    private ApplicationType(String value) {
+    private VultrApplicationType(String value) {
         this.value = value;
     }
 

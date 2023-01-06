@@ -149,9 +149,9 @@
     - [ ] Get All Clusters
 - [X] Operating Systems
     - [X] List OS
-- [ ] Plans
+- [X] Plans
     - [X] List Plans
-    - [ ] List Bare Metal Plans
+    - [X] List Bare Metal Plans
 - [ ] VPCs
     - [ ] Get a VPC
     - [ ] Delete a VPC

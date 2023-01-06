@@ -13,15 +13,15 @@ import org.noear.snack.annotation.ONodeAttr;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageMeta {
+public class VultrPageLink {
     /**
      *
      */
-    @ONodeAttr(name = "total")
-    private Integer total;
+    @ONodeAttr(name = "next")
+    private String next;
     /**
      *
      */
-    @ONodeAttr(name = "links")
-    private PageLink links;
+    @ONodeAttr(name = "prev")
+    private String prev;
 }

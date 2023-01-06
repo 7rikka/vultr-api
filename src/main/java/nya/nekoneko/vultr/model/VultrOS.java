@@ -13,7 +13,7 @@ import org.noear.snack.annotation.ONodeAttr;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VultrOs {
+public class VultrOS {
     /**
      *
      */

@@ -1,9 +1,9 @@
 package nya.nekoneko.vultr;
 
-import nya.nekoneko.vultr.consts.ApplicationType;
-import nya.nekoneko.vultr.consts.PlanType;
+import nya.nekoneko.vultr.consts.VultrApplicationType;
+import nya.nekoneko.vultr.consts.VultrPlanType;
 import nya.nekoneko.vultr.model.*;
-import nya.nekoneko.vultr.model.page.PageMeta;
+import nya.nekoneko.vultr.model.page.VultrPageMeta;
 import nya.nekoneko.vultr.param.InstanceQueryParam;
 import nya.nekoneko.vultr.param.PaginationParam;
 import okhttp3.Request;
@@ -47,7 +47,7 @@ public class VultrClient {
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrInstance> vultrInstances = node.get("vultrInstances").toObjectList(VultrInstance.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(vultrInstances, meta);
     }
 
@@ -106,7 +106,7 @@ public class VultrClient {
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrBillingHistory> vultrBillingHistoryList = node.get("billing_history").toObjectList(VultrBillingHistory.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(vultrBillingHistoryList, meta);
     }
 
@@ -138,7 +138,7 @@ public class VultrClient {
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrBillingInvoice> vultrBillingInvoiceList = node.get("billing_invoices").toObjectList(VultrBillingInvoice.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(vultrBillingInvoiceList, meta);
     }
 
@@ -213,7 +213,7 @@ public class VultrClient {
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrBillingInvoiceItem> vultrBillingInvoiceItemList = node.get("invoice_items").toObjectList(VultrBillingInvoiceItem.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(vultrBillingInvoiceItemList, meta);
     }
 
@@ -223,13 +223,13 @@ public class VultrClient {
      * @param paginationParam 分页信息
      * @return
      */
-    public VultrResult<VultrApplication> getApplicationList(ApplicationType applicationType, PaginationParam paginationParam) {
+    public VultrResult<VultrApplication> getApplicationList(VultrApplicationType vultrApplicationType, PaginationParam paginationParam) {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/applications")
                 .header("Authorization", "Bearer " + API_KEY);
-        if (null != applicationType) {
-            vultrRequest.addParam("type", applicationType.value());
+        if (null != vultrApplicationType) {
+            vultrRequest.addParam("type", vultrApplicationType.value());
         }
         if (null != paginationParam) {
             vultrRequest.addParam("per_page", paginationParam.getPerPage());
@@ -239,18 +239,18 @@ public class VultrClient {
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrApplication> applicationList = node.get("applications").toObjectList(VultrApplication.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(applicationList, meta);
     }
 
     /**
      * 获取应用程序列表
      *
-     * @param applicationType 应用程序类型
+     * @param vultrApplicationType 应用程序类型
      * @return
      */
-    public VultrResult<VultrApplication> getApplicationList(ApplicationType applicationType) {
-        return getApplicationList(applicationType, null);
+    public VultrResult<VultrApplication> getApplicationList(VultrApplicationType vultrApplicationType) {
+        return getApplicationList(vultrApplicationType, null);
     }
 
     /**
@@ -275,17 +275,17 @@ public class VultrClient {
     /**
      * 获取套餐列表
      *
-     * @param planType        套餐类型
+     * @param vultrPlanType   套餐类型
      * @param paginationParam 分页信息
      * @return
      */
-    public VultrResult<VultrPlan> getPlanList(PlanType planType, PaginationParam paginationParam) {
+    public VultrResult<VultrPlan> getPlanList(VultrPlanType vultrPlanType, PaginationParam paginationParam) {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/plans")
                 .header("Authorization", "Bearer " + API_KEY);
-        if (null != planType) {
-            vultrRequest.addParam("type", planType.value());
+        if (null != vultrPlanType) {
+            vultrRequest.addParam("type", vultrPlanType.value());
         }
         if (null != paginationParam) {
             vultrRequest.addParam("per_page", paginationParam.getPerPage());
@@ -295,7 +295,7 @@ public class VultrClient {
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrPlan> applicationList = node.get("plans").toObjectList(VultrPlan.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(applicationList, meta);
     }
 
@@ -312,11 +312,11 @@ public class VultrClient {
     /**
      * 获取套餐列表
      *
-     * @param planType 套餐类型
+     * @param vultrPlanType 套餐类型
      * @return
      */
-    public VultrResult<VultrPlan> getPlanList(PlanType planType) {
-        return getPlanList(planType, null);
+    public VultrResult<VultrPlan> getPlanList(VultrPlanType vultrPlanType) {
+        return getPlanList(vultrPlanType, null);
     }
 
     /**
@@ -334,7 +334,7 @@ public class VultrClient {
      * @param paginationParam 分页信息
      * @return
      */
-    public VultrResult<VultrOs> getOSList(PaginationParam paginationParam) {
+    public VultrResult<VultrOS> getOSList(PaginationParam paginationParam) {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/os")
@@ -346,9 +346,9 @@ public class VultrClient {
         Request request = vultrRequest.buildRequest();
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
-        List<VultrOs> vultrOsList = node.get("os").toObjectList(VultrOs.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
-        return new VultrResult<>(vultrOsList, meta);
+        List<VultrOS> vultrOSList = node.get("os").toObjectList(VultrOS.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
+        return new VultrResult<>(vultrOSList, meta);
     }
 
     /**
@@ -356,7 +356,7 @@ public class VultrClient {
      *
      * @return
      */
-    public VultrResult<VultrOs> getOSList() {
+    public VultrResult<VultrOS> getOSList() {
         return getOSList(null);
     }
 
@@ -379,7 +379,7 @@ public class VultrClient {
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrRegion> vultrRegionList = node.get("regions").toObjectList(VultrRegion.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(vultrRegionList, meta);
     }
 
@@ -392,7 +392,7 @@ public class VultrClient {
         return getRegionList(null);
     }
 
-    public VultrResult<VultrIso> getISOList(PaginationParam paginationParam) {
+    public VultrResult<VultrISO> getISOList(PaginationParam paginationParam) {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/iso")
@@ -404,25 +404,26 @@ public class VultrClient {
         Request request = vultrRequest.buildRequest();
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
-        List<VultrIso> regionList = node.get("isos").toObjectList(VultrIso.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        List<VultrISO> regionList = node.get("isos").toObjectList(VultrISO.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(regionList, meta);
     }
 
-    public VultrResult<VultrIso> getISOList() {
+    public VultrResult<VultrISO> getISOList() {
         return getISOList(null);
     }
 
-    public VultrIso getISO(String isoId){
+    public VultrISO getISO(String isoId) {
         Request request = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/iso/" + isoId)
                 .header("Authorization", "Bearer " + API_KEY)
                 .buildRequest();
         String json = VultrCall.doCallGetString(request);
-        return ONode.loadStr(json, options).get("iso").toObject(VultrIso.class);
+        return ONode.loadStr(json, options).get("iso").toObject(VultrISO.class);
     }
-    public VultrIso createISO(String url){
+
+    public VultrISO createISO(String url) {
         Request request = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/iso")
@@ -430,13 +431,13 @@ public class VultrClient {
                 .header("Authorization", "Bearer " + API_KEY)
                 .buildRequest();
         String json = VultrCall.doCallGetString(request);
-        return ONode.loadStr(json, options).get("iso").toObject(VultrIso.class);
+        return ONode.loadStr(json, options).get("iso").toObject(VultrISO.class);
     }
 
-    public void deleteISO(String isoId){
+    public void deleteISO(String isoId) {
         Request request = VultrRequestFactory
                 .getVultrRequest()
-                .url("https://api.vultr.com/v2/iso/"+isoId)
+                .url("https://api.vultr.com/v2/iso/" + isoId)
                 .delete()
                 .header("Authorization", "Bearer " + API_KEY)
                 .buildRequest();
@@ -444,20 +445,43 @@ public class VultrClient {
     }
 
     public VultrResult<VultrPublicISO> getPublicISOList() {
-        //https://api.vultr.com/v2/iso-public
+        return getPublicISOList(null);
+    }
+
+    public VultrResult<VultrPublicISO> getPublicISOList(PaginationParam paginationParam) {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/iso-public")
                 .header("Authorization", "Bearer " + API_KEY);
-//        if (null != paginationParam) {
-//            vultrRequest.addParam("per_page", paginationParam.getPerPage());
-//            vultrRequest.addParam("cursor", paginationParam.getCursor());
-//        }
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
         Request request = vultrRequest.buildRequest();
         String result = VultrCall.doCallGetString(request);
         ONode node = ONode.loadStr(result, options);
         List<VultrPublicISO> regionList = node.get("public_isos").toObjectList(VultrPublicISO.class);
-        PageMeta meta = node.get("meta").toObject(PageMeta.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(regionList, meta);
+    }
+
+    public VultrResult<VultrMetalPlan> getBareMetalPlanList(PaginationParam paginationParam){
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/plans-metal")
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<VultrMetalPlan> metalPlanList = node.get("plans_metal").toObjectList(VultrMetalPlan.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
+        return new VultrResult<>(metalPlanList, meta);
+    }
+    public VultrResult<VultrMetalPlan> getBareMetalPlanList(){
+        return getBareMetalPlanList(null);
     }
 }

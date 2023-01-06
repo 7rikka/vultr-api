@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nya.nekoneko.vultr.model.page.PageMeta;
+import nya.nekoneko.vultr.model.page.VultrPageMeta;
 
 import java.util.List;
 
@@ -19,5 +19,5 @@ import java.util.List;
 @AllArgsConstructor
 public class VultrResult<T> {
     private List<T> list;
-    private PageMeta meta;
+    private VultrPageMeta meta;
 }

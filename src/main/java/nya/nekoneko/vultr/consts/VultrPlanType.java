@@ -4,7 +4,7 @@ package nya.nekoneko.vultr.consts;
  * @author Ho
  */
 
-public enum PlanType {
+public enum VultrPlanType {
     /**
      *
      */
@@ -51,7 +51,7 @@ public enum PlanType {
     VCG("vcg");
     private final String value;
 
-    PlanType(String value) {
+    VultrPlanType(String value) {
         this.value = value;
     }
 
