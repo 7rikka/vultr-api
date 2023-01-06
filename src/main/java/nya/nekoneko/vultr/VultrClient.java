@@ -497,7 +497,7 @@ public class VultrClient {
         return ONode.loadStr(result).get("available_plans").toObjectList(String.class);
     }
 
-    public void createInstance(InstanceCreateParam instanceCreateParam){
+    public void createInstance(InstanceCreateParam instanceCreateParam) {
         //TODO
         ONode node = ONode.newObject();
         node.set("region", "nrt");
@@ -509,5 +509,34 @@ public class VultrClient {
                 .url("https://api.vultr.com/v2/instances")
                 .postJson(null)
                 .header("Authorization", "Bearer " + API_KEY);
+    }
+
+    public VultrResult<VultrSnapshot> getSnapshotList(String description, PaginationParam paginationParam) {
+        //
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/snapshots")
+                .postJson(null)
+                .header("Authorization", "Bearer " + API_KEY);
+        if (null != description) {
+            vultrRequest.addParam("description", description);
+        }
+        if (null != paginationParam) {
+            vultrRequest.addParam("per_page", paginationParam.getPerPage());
+            vultrRequest.addParam("cursor", paginationParam.getCursor());
+        }
+        return null;
+    }
+
+    public VultrResult<VultrSnapshot> getSnapshotList(PaginationParam paginationParam) {
+        return getSnapshotList(null, paginationParam);
+    }
+
+    public VultrResult<VultrSnapshot> getSnapshotList(String description) {
+        return getSnapshotList(description, null);
+    }
+
+    public VultrResult<VultrSnapshot> getSnapshotList() {
+        return getSnapshotList(null, null);
     }
 }
