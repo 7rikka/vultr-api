@@ -167,9 +167,9 @@
     - [ ] Attach Reserved IP
     - [ ] Detach Reserved IP
     - [ ] Convert Instance IP to Reserved IP
-- [ ] Regions
+- [X] Regions
     - [X] List Regions
-    - [ ] List available plans in region
+    - [X] List available plans in region
 - [ ] Snapshots
     - [ ] Delete Snapshot
     - [ ] Get Snapshot

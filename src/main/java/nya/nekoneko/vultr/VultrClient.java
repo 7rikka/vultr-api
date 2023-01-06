@@ -484,4 +484,16 @@ public class VultrClient {
     public VultrResult<VultrMetalPlan> getBareMetalPlanList(){
         return getBareMetalPlanList(null);
     }
+    //https://api.vultr.com/v2/regions/{region-id}/availability
+    public List<String> getAvailablePlanInRegion(String regionId){
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/regions/" + regionId + "/availability")
+                .header("Authorization", "Bearer " + API_KEY);
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        System.out.println(result);
+        return ONode.loadStr(result).get("available_plans").toObjectList(String.class);
+
+    }
 }
