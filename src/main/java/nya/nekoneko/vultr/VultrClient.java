@@ -4,6 +4,7 @@ import nya.nekoneko.vultr.consts.VultrApplicationType;
 import nya.nekoneko.vultr.consts.VultrPlanType;
 import nya.nekoneko.vultr.model.*;
 import nya.nekoneko.vultr.model.page.VultrPageMeta;
+import nya.nekoneko.vultr.param.InstanceCreateParam;
 import nya.nekoneko.vultr.param.InstanceQueryParam;
 import nya.nekoneko.vultr.param.PaginationParam;
 import okhttp3.Request;
@@ -465,7 +466,7 @@ public class VultrClient {
         return new VultrResult<>(regionList, meta);
     }
 
-    public VultrResult<VultrMetalPlan> getBareMetalPlanList(PaginationParam paginationParam){
+    public VultrResult<VultrMetalPlan> getBareMetalPlanList(PaginationParam paginationParam) {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/plans-metal")
@@ -481,19 +482,32 @@ public class VultrClient {
         VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
         return new VultrResult<>(metalPlanList, meta);
     }
-    public VultrResult<VultrMetalPlan> getBareMetalPlanList(){
+
+    public VultrResult<VultrMetalPlan> getBareMetalPlanList() {
         return getBareMetalPlanList(null);
     }
-    //https://api.vultr.com/v2/regions/{region-id}/availability
-    public List<String> getAvailablePlanInRegion(String regionId){
+
+    public List<String> getAvailablePlanInRegion(String regionId) {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/regions/" + regionId + "/availability")
                 .header("Authorization", "Bearer " + API_KEY);
         Request request = vultrRequest.buildRequest();
         String result = VultrCall.doCallGetString(request);
-        System.out.println(result);
         return ONode.loadStr(result).get("available_plans").toObjectList(String.class);
+    }
 
+    public void createInstance(InstanceCreateParam instanceCreateParam){
+        //TODO
+        ONode node = ONode.newObject();
+        node.set("region", "nrt");
+        node.set("plan", "vc2-1c-1gb");
+
+//        https://api.vultr.com/v2/instances
+        VultrRequest vultrRequest = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/instances")
+                .postJson(null)
+                .header("Authorization", "Bearer " + API_KEY);
     }
 }
