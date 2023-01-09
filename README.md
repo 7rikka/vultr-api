@@ -174,7 +174,7 @@
     - [ ] Delete Snapshot
     - [ ] Get Snapshot
     - [ ] Update Snapshot
-    - [ ] List Snapshots
+    - [X] List Snapshots
     - [ ] Create Snapshot
     - [ ] Create Snapshot from URL
 - [ ] SSH Keys

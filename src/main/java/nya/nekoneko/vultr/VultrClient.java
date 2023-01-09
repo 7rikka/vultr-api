@@ -516,7 +516,6 @@ public class VultrClient {
         VultrRequest vultrRequest = VultrRequestFactory
                 .getVultrRequest()
                 .url("https://api.vultr.com/v2/snapshots")
-                .postJson(null)
                 .header("Authorization", "Bearer " + API_KEY);
         if (null != description) {
             vultrRequest.addParam("description", description);
@@ -525,7 +524,12 @@ public class VultrClient {
             vultrRequest.addParam("per_page", paginationParam.getPerPage());
             vultrRequest.addParam("cursor", paginationParam.getCursor());
         }
-        return null;
+        Request request = vultrRequest.buildRequest();
+        String result = VultrCall.doCallGetString(request);
+        ONode node = ONode.loadStr(result, options);
+        List<VultrSnapshot> snapshotList = node.get("snapshots").toObjectList(VultrSnapshot.class);
+        VultrPageMeta meta = node.get("meta").toObject(VultrPageMeta.class);
+        return new VultrResult<>(snapshotList, meta);
     }
 
     public VultrResult<VultrSnapshot> getSnapshotList(PaginationParam paginationParam) {
