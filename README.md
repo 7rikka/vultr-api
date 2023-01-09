@@ -172,7 +172,7 @@
     - [X] List available plans in region
 - [ ] Snapshots
     - [ ] Delete Snapshot
-    - [ ] Get Snapshot
+    - [X] Get Snapshot
     - [ ] Update Snapshot
     - [X] List Snapshots
     - [ ] Create Snapshot

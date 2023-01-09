@@ -543,4 +543,14 @@ public class VultrClient {
     public VultrResult<VultrSnapshot> getSnapshotList() {
         return getSnapshotList(null, null);
     }
+
+    public VultrSnapshot getSnapshot(String snapshotId) {
+        Request request = VultrRequestFactory
+                .getVultrRequest()
+                .url("https://api.vultr.com/v2/snapshots/" + snapshotId)
+                .header("Authorization", "Bearer " + API_KEY)
+                .buildRequest();
+        String json = VultrCall.doCallGetString(request);
+        return ONode.loadStr(json, options).get("snapshot").toObject(VultrSnapshot.class);
+    }
 }
